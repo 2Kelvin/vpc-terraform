@@ -114,9 +114,43 @@ resource "aws_route_table_association" "private_nat_route_assoc" {
 }
 
 
-# Todo
-#       - use count/for-each for repetitive resources
-#       - add variables file
+# -------------------------- instance & security group to test my default vpc --------------------------
+resource "aws_security_group" "tf_sg" {
+  description = "Custom Terraform security group"
+  name        = "tf_sg"
+  vpc_id      = aws_vpc.tf_vpc.id
+  tags = {
+    Name = "tf_sg"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
+  description       = "Enable SSH"
+  security_group_id = aws_security_group.tf_sg.id
+  ip_protocol       = "tcp"
+  from_port         = 22
+  to_port           = 22
+  cidr_ipv4         = "0.0.0.0/0"
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_all_outbound" {
+  description       = "Allow all outbound traffic"
+  security_group_id = aws_security_group.tf_sg.id
+  ip_protocol       = "-1"
+  cidr_ipv4         = "0.0.0.0/0"
+}
+
+resource "aws_instance" "test_vpc_instance" {
+  ami                    = "ami-091138d0f0d41ff90"
+  key_name               = "ec2_key_pair"
+  instance_type          = "t3.micro"
+  subnet_id              = aws_subnet.public_subnet[0].id
+  vpc_security_group_ids = [aws_security_group.tf_sg.id]
+  tags = {
+    Name = "tf_ec2"
+  }
+}
+
 
 
 # all the AWS resources required for a fully functional VPC:
@@ -124,3 +158,4 @@ resource "aws_route_table_association" "private_nat_route_assoc" {
 #       - NAT gateway
 #       - internet gateway
 #       - route tables
+#       - 2 AZs for enhanced availability

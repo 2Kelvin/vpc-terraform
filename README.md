@@ -6,3 +6,4 @@ explain why:
 - 2 azs instead of one
 - NAT gateway needs a created EIP assigned to it
 - tags: help manage and track resources
+- reusable tf code -> in resume: reduced repetitive code by 50%

@@ -158,12 +158,3 @@ resource "aws_instance" "test_vpc_instance" {
     Name = "tf_ec2"
   }
 }
-
-
-
-# all the AWS resources required for a fully functional VPC:
-#       - subnets (private and public)
-#       - NAT gateway
-#       - internet gateway
-#       - route tables
-#       - 2 AZs for enhanced availability

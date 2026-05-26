@@ -153,6 +153,7 @@ resource "aws_instance" "test_vpc_instance" {
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public_subnet[0].id
   vpc_security_group_ids = [aws_security_group.tf_sg.id]
+  user_data              = file("hello.sh")
   tags = {
     Name = "tf_ec2"
   }

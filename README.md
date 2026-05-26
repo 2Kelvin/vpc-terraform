@@ -8,3 +8,4 @@ explain why:
 - tags: help manage and track resources
 - reusable tf code -> in resume: reduced repetitive code by 50%
 - map_public_ip_on_launch = true
+- terraform apply -replace="aws_instance.test_vpc_instance" --> saved time from recreating the whole infrastructure. also learnt that Ips are assigned on instance creation not while the instance is already running. same as user_data script; it runs only once during instance creation

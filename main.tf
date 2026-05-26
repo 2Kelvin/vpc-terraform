@@ -148,9 +148,9 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_outbound" {
 }
 
 resource "aws_instance" "test_vpc_instance" {
-  ami                    = "ami-091138d0f0d41ff90"
-  key_name               = "ec2_key_pair"
-  instance_type          = "t3.micro"
+  ami                    = var.instance_ami
+  key_name               = var.instance_keypair
+  instance_type          = var.instance_type
   subnet_id              = aws_subnet.public_subnet[0].id
   vpc_security_group_ids = [aws_security_group.tf_sg.id]
   user_data              = file("hello.sh")

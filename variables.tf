@@ -21,3 +21,22 @@ variable "azs" {
   type        = list(string)
   default     = ["us-east-1a", "us-east-1b"]
 }
+
+
+variable "instance_type" {
+  description = "EC2 type"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "instance_keypair" {
+  description = "EC2 SSH key pair"
+  type        = string
+  default     = "ec2_key_pair"
+}
+
+variable "instance_ami" {
+  description = "EC2 AMI"
+  type        = string
+  default     = "ami-091138d0f0d41ff90"
+}

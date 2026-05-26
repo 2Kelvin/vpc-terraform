@@ -7,3 +7,4 @@ explain why:
 - NAT gateway needs a created EIP assigned to it
 - tags: help manage and track resources
 - reusable tf code -> in resume: reduced repetitive code by 50%
+- map_public_ip_on_launch = true

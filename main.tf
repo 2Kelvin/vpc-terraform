@@ -37,10 +37,11 @@ resource "aws_eip" "nat_eip" {
 
 # subnets
 resource "aws_subnet" "public_subnet" {
-  vpc_id            = aws_vpc.tf_vpc.id
-  count             = length(var.public_subnet_cidrs)
-  cidr_block        = var.public_subnet_cidrs[count.index]
-  availability_zone = var.azs[count.index]
+  vpc_id                  = aws_vpc.tf_vpc.id
+  count                   = length(var.public_subnet_cidrs)
+  cidr_block              = var.public_subnet_cidrs[count.index]
+  availability_zone       = var.azs[count.index]
+  map_public_ip_on_launch = true
   tags = {
     Name = "public_subnet_${count.index + 1}"
   }
@@ -94,7 +95,7 @@ resource "aws_route" "igw_route_rules" {
 resource "aws_route" "nat_route_rules" {
   count                  = length(var.private_subnet_cidrs)
   route_table_id         = aws_route_table.nat_route_table[count.index].id
-  gateway_id             = aws_nat_gateway.nat_gateway[count.index].id
+  nat_gateway_id         = aws_nat_gateway.nat_gateway[count.index].id
   destination_cidr_block = "0.0.0.0/0"
 }
 
@@ -131,6 +132,9 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
   from_port         = 22
   to_port           = 22
   cidr_ipv4         = "0.0.0.0/0"
+  tags = {
+    Name = "allow_ssh"
+  }
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_all_outbound" {
@@ -138,6 +142,9 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_outbound" {
   security_group_id = aws_security_group.tf_sg.id
   ip_protocol       = "-1"
   cidr_ipv4         = "0.0.0.0/0"
+  tags = {
+    Name = "allow_all_outbound"
+  }
 }
 
 resource "aws_instance" "test_vpc_instance" {

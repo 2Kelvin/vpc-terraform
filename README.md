@@ -1,5 +1,7 @@
 # Building a Multi-AZ AWS VPC with Terraform
 
+<img width="2935" height="1787" alt="vpc_tf" src="https://github.com/user-attachments/assets/496b7902-06a9-407d-9953-0cce273d21e5" />
+
 ## Architecture Overview
 
 To learn AWS networking from the ground up, I built a highly available Virtual Private Cloud (VPC) using Terraform.

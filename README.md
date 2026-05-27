@@ -23,7 +23,7 @@ I separated the infrastructure via subnets to keep the frontend accessible and t
 
 Resources within the same VPC can natively communicate with each other securely, guided by local `route table` rules.
 
-## 6 Key Takeaways From This Project
+## 5 Key Takeaways From This Project
 
 1. **NAT Gateway Placement**: A NAT Gateway must be provisioned inside a public subnet because it requires a public Elastic IP to mask private traffic.
 2. **Global Tagging**: Instead of tagging resources individually, use Terraform’s `default_tags` block in the provider configuration to simplify cost tracking and organization.
